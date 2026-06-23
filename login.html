@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>User Login</title>
+
+    <style>
+
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+            font-family:Arial,sans-serif;
+        }
+
+        body{
+            background:linear-gradient(135deg,#e60000,#b30000);
+            height:100vh;
+            display:flex;
+            justify-content:center;
+            align-items:center;
+        }
+
+        .login-box{
+            background:white;
+            width:400px;
+            padding:40px;
+            border-radius:15px;
+            box-shadow:0 10px 25px rgba(0,0,0,0.2);
+        }
+
+        h1{
+            text-align:center;
+            color:#e60000;
+            margin-bottom:20px;
+        }
+
+        input{
+            width:100%;
+            padding:12px;
+            margin:10px 0;
+            border:1px solid #ccc;
+            border-radius:8px;
+        }
+
+        button{
+            width:100%;
+            padding:12px;
+            background:#e60000;
+            color:white;
+            border:none;
+            border-radius:8px;
+            cursor:pointer;
+            font-size:16px;
+        }
+
+        #msg{
+            text-align:center;
+            margin-top:15px;
+            font-weight:bold;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<div class="login-box">
+
+    <h1>🩸 User Login</h1>
+
+    <input type="email"
+           id="email"
+           placeholder="Enter Email">
+
+    <input type="password"
+           id="password"
+           placeholder="Enter Password">
+
+    <button onclick="loginUser()">
+        Login
+    </button>
+
+    <p id="msg"></p>
+
+</div>
+
+<script>
+
+function loginUser(){
+
+    let email =
+    document.getElementById("email").value;
+
+    let password =
+    document.getElementById("password").value;
+
+    let savedEmail =
+    localStorage.getItem("userEmail");
+
+    let savedPassword =
+    localStorage.getItem("userPassword");
+
+    if(email === savedEmail &&
+       password === savedPassword){
+
+        document.getElementById("msg").innerHTML =
+        "✅ Login Successful";
+
+        document.getElementById("msg").style.color =
+        "green";
+
+        setTimeout(function(){
+
+            window.location.href="index.html";
+
+        },1000);
+
+    }
+    else{
+
+        document.getElementById("msg").innerHTML =
+        "❌ Invalid Email or Password";
+
+        document.getElementById("msg").style.color =
+        "red";
+
+    }
+
+}
+
+</script>
+
+</body>
+</html>
+

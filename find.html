@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Find Donor - BloodLink</title>
+
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial, sans-serif;
+}
+
+body{
+    background:#f8f8f8;
+}
+
+/* HERO */
+
+.hero{
+    background:linear-gradient(135deg,#e60000,#b30000);
+    color:white;
+    text-align:center;
+    padding:80px 20px 150px;
+}
+
+.hero h1{
+    font-size:60px;
+    margin-bottom:20px;
+}
+
+.hero p{
+    font-size:22px;
+}
+
+/* SEARCH BOX */
+
+.search-box{
+    width:90%;
+    max-width:1000px;
+    margin:-80px auto 40px;
+    background:white;
+    padding:35px;
+    border-radius:20px;
+    box-shadow:0 10px 25px rgba(0,0,0,0.1);
+}
+
+.search-box h2{
+    text-align:center;
+    margin-bottom:25px;
+}
+
+.form-row{
+    display:flex;
+    gap:15px;
+    flex-wrap:wrap;
+}
+
+.form-row input,
+.form-row select{
+    flex:1;
+    min-width:200px;
+    padding:14px;
+    border:1px solid #ddd;
+    border-radius:10px;
+}
+
+.form-row button{
+    background:#e60000;
+    color:white;
+    border:none;
+    padding:14px 30px;
+    border-radius:10px;
+    cursor:pointer;
+    font-weight:bold;
+}
+
+/* RESULTS */
+
+.results{
+    width:90%;
+    max-width:1000px;
+    margin:auto;
+}
+
+.results h2{
+    text-align:center;
+    margin-bottom:25px;
+}
+
+#donor-list{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+    gap:20px;
+}
+
+.donor-card{
+    background:white;
+    padding:20px;
+    border-radius:15px;
+    box-shadow:0 5px 15px rgba(0,0,0,0.08);
+}
+
+.donor-card h3{
+    color:#e60000;
+    margin-bottom:10px;
+}
+
+.donor-card p{
+    margin:8px 0;
+}
+.navbar{
+    background:white;
+    padding:20px 40px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.logo{
+    color:#e60000;
+    font-size:28px;
+    font-weight:bold;
+}
+
+.navbar ul{
+    list-style:none;
+    display:flex;
+    gap:25px;
+}
+
+.navbar a{
+    text-decoration:none;
+    color:black;
+    font-weight:bold;
+}
+
+.navbar a:hover{
+    color:#e60000;
+}
+
+</style>
+</head>
+<body>
+<nav class="navbar">
+
+    <div class="logo">🩸 BloodLink</div>
+
+    <ul>
+
+        <li><a href="index.html">Home</a></li>
+
+        <li><a href="find.html">Find Donor</a></li>
+
+        <li><a href="register.html">Become Donor</a></li>
+
+        <li><a href="emergency.html">Emergency</a></li>
+
+        <li><a href="about.html">About Us</a></li>
+        <li><a href="contact.html">Contact Us</a></li>
+        
+        
+        
+        
+       
+
+
+
+    </ul>
+
+</nav>
+<section class="hero">
+    <h1>Find Blood Donors</h1>
+    <p>Search blood donors in your area and save lives.</p>
+</section>
+
+<div class="search-box">
+
+    <h2>🔍 Search Donors</h2>
+
+    <div class="form-row">
+
+        <select id="searchBlood">
+            <option value="">Select Blood Group</option>
+            <option>A+</option>
+            <option>A-</option>
+            <option>B+</option>
+            <option>B-</option>
+            <option>AB+</option>
+            <option>AB-</option>
+            <option>O+</option>
+            <option>O-</option>
+        </select>
+
+        <input type="text" id="searchCity" placeholder="Enter City">
+
+        <button onclick="searchDonor()">Search</button>
+
+    </div>
+
+</div>
+
+<div class="results">
+
+    <h2>Search Results</h2>
+
+    <div id="donor-list">
+
+        <div class="donor-card">
+            <h3>No Donors Yet</h3>
+            <p>Register donors from Become Donor page.</p>
+        </div>
+
+    </div>
+
+</div>
+ 
+
+<script>
+
+function searchDonor(){
+
+    let blood =
+    document.getElementById("searchBlood").value.toLowerCase();
+
+    let city =
+    document.getElementById("searchCity").value.toLowerCase();
+
+    let donors =
+    JSON.parse(localStorage.getItem("donors")) || [];
+
+    let output = "";
+
+    donors.forEach(function(donor){
+
+        if(
+           (blood==="" || donor.blood.toLowerCase()===blood)
+           &&
+           (city==="" || donor.city.toLowerCase().includes(city))
+        ){
+
+            output += `
+            <div class="donor-card">
+                <h3>${donor.name}</h3>
+                <p><b>Blood Group:</b> ${donor.blood}</p>
+                <p><b>City:</b> ${donor.city}</p>
+                <p><b>Phone:</b> ${donor.phone}</p>
+            </div>
+            `;
+        }
+    });
+
+    if(output===""){
+        output = `
+        <div class="donor-card">
+            <h3>No Donors Found</h3>
+            <p>Try another blood group or city.</p>
+        </div>`;
+    }
+
+    document.getElementById("donor-list").innerHTML = output;
+}
+
+
+</script>
+
+</body>
+</html>
